@@ -1,3 +1,5 @@
+from typing import Sequence
+
 from fastapi import (
     APIRouter,
     status as s,
@@ -12,37 +14,41 @@ router = APIRouter(
     tags=['Книги'],
 )
 
-@router.post('/', status_code=s.HTTP_201_CREATED)
+@router.post('/', status_code=s.HTTP_201_CREATED, response_model=SBook)
 async def add_book(
     book: SBookAdd,
     session: SessionDep,
-) -> SBook:
+):
     new_book = await BR.add_book(book, session)
     
-    return new_book # type: ignore
+    return SBook.model_validate(new_book)
 
-@router.get('/', status_code=s.HTTP_200_OK)
-async def get_all_books(session: SessionDep) -> list[SBook]:
-    pass
 
-@router.get('/{id}', status_code=s.HTTP_200_OK)
+@router.get('/', status_code=s.HTTP_200_OK, response_model=list[SBook])
+async def get_all_books(session: SessionDep):
+    return await BR.get_all_books(session) 
+
+@router.get('/{id}', status_code=s.HTTP_200_OK, response_model=SBook)
 async def get_book(
     id: int,
     session: SessionDep,
-) -> SBook:
-    pass
+):
+    return await BR.get_book(id, session)
+    
+    
 
-@router.put('/{id}', status_code=s.HTTP_200_OK)
+@router.put('/{id}', status_code=s.HTTP_200_OK, response_model=SBook)
 async def update_book(
     id: int,
     book: SBookAdd,
     session: SessionDep,
-) -> SBook:
-    pass
+):
+    return await BR.update_book(id, book, session)
+
 
 @router.delete('/{id}', status_code=s.HTTP_204_NO_CONTENT)
 async def delete_book(
     id: int,
     session: SessionDep,
 ) -> None:
-    pass
+    await BR.delete_book(id, session)
