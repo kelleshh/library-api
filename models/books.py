@@ -35,7 +35,7 @@ class BooksModel(Model):
             name='ck_books_year_range',
         ),
         CheckConstraint(
-            '(pages IS NULL) OR (pages > 0)',
+            '(pages IS NULL) OR (pages > 10)',
             name='ck_pages_positive',
         ),
         # Индексы под частые запросы
