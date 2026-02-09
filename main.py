@@ -5,6 +5,7 @@ from typing import Literal
 
 from utils.logger import logger
 from database import Model, engine
+from routers.books import router as books_router
 
 
 
@@ -22,6 +23,7 @@ app = FastAPI(
     description='API-сервис для онлайн-библиотеки',
     lifespan=lifespan
     )
+app.include_router(books_router)
 
 
 
