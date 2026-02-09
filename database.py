@@ -5,7 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends
 from typing import Annotated
 
-DATABASE_URL = 'postgresql+asyncpg://user:password@localhost:5432/tasks_db'
+DATABASE_URL = "sqlite+aiosqlite:////home/kelle/library-api/library.db"
+
 
 engine = create_async_engine(DATABASE_URL)
 
