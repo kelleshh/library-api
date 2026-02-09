@@ -31,7 +31,7 @@ class BooksModel(Model):
     __table_args__ = (
         # Ограничение на релевантный год и положительное количество страниц
         CheckConstraint(
-            '(year IS NULL) OR (year BETWEEN -2000 AND EXTRACT(YEAR FROM NOW()))',
+            '(year IS NULL) OR (year BETWEEN -2000 AND 2100)',
             name='ck_books_year_range',
         ),
         CheckConstraint(
